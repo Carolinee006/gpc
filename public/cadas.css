@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-image: url(https://images.pexels.com/photos/269790/pexels-photo-269790.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
+  overflow: hidden; /* Evita rolagem desnecessária */
+  position: relative; /* Necessário para posicionar a película */
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  pointer-events: none;
+  z-index: 0; /* Fica atrás do conteúdo */
+}  
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  min-height: 100vh; 
+  width: 100%;
+  padding: 15px; 
+  position: relative; /* Necessário para garantir que o card fique acima da película */
+  z-index: 1; /* Garante que o conteúdo fique acima da película */
+}
+
+.card {
+  background-color: #ffffff80;
+  padding: 30px;
+  border-radius: 4%;
+  box-shadow: 3px 3px 1px 0px #00000060;
+  width: 100%;
+  max-width: 400px; 
+  z-index: 1; /* Certifica-se de que o cartão fique acima da camada de fundo e da película */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: rgb(46, 85, 153);
+  font-family: fantasy;
+}
+
+.label-float input {
+  width: 100%;
+  padding: 5px;
+  display: inline-block;
+  border: 0;
+  border-bottom: 2px solid rgb(46, 85, 153);
+  background-color: transparent;
+  outline: none;
+  font-size: 16px;
+  transition: all .3s ease-out;
+  border-radius: 0;
+}
+
+.label-float {
+  position: relative;
+  padding-top: 13px;
+  margin-bottom: 20px; /* Espaço entre campos */
+}
+
+.label-float input:focus {
+  border-bottom: 2px solid #4038a0;
+}
+
+.label-float label {
+  color: rgb(46, 85, 153);
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 13px;
+  transition: all .3s ease-out;
+}
+
+.label-float input:focus + label,
+.label-float input:valid + label {
+  font-size: 13px;
+  margin-top: 0;
+  color: #4038a0;
+}
+
+button {
+  background-color: transparent;
+  border-color: rgb(46, 85, 153);
+  color: rgb(46, 85, 153);
+  padding: 7px;
+  font-weight: bold;
+  font-size: 12pt;
+  margin-top: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  transition: all .4s ease-out;
+}
+
+button:hover {
+  background-color: rgb(46, 85, 153);
+  color: #fff;
+}
+
+.justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+.fa-eye {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  cursor: pointer;
+  color: rgb(46, 85, 153);
+}
+
+#msgError {
+  text-align: center;
+  color: #ff0000;
+  background-color: #ffbbbb;
+  padding: 10px;
+  border-radius: 4px;
+  display: none;
+}
+
+#msgSuccess {
+  text-align: center;
+  color: #00bb00;
+  background-color: #bbffbe;
+  padding: 10px;
+  border-radius: 4px;
+  display: none;
+}
+
+@media (max-width: 576px) {
+  .container {
+    margin-top: 30px; 
+  }
+
+  .card {
+    padding: 20px;
+    max-width: 100%; /* Garante que o cartão não ultrapasse a tela */
+  }
+
+  h1 {
+    font-size: 24px; /* Ajuste a fonte para dispositivos menores */
+  }
+
+  button {
+    font-size: 14pt; 
+  }
+}

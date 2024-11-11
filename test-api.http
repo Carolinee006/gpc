@@ -1,0 +1,8 @@
+POST http://localhost:3000/api/truck-route
+Content-Type: application/json
+
+{
+  "origin": "2734 Theodoro Ritter, Taquara, RS",
+  "destination": "2419 Pinheiro Machado, Taquara, RS",
+  "obstacles":["2365 Erechim, Taquara, RS"]
+}

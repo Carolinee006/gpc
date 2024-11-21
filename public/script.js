@@ -134,46 +134,6 @@ function geocodeAddress(address, callback) {
         }
     });
 }
-let stepDisplay;
-let marker;
-let routeIndex = 0;
-
-// Função para inicializar e simular a rota
-function startRoute() {
-    const directions = directionsRenderer.getDirections();
-    if (directions) {
-        const route = directions.routes[0].legs[0];
-        animateRoute(route);
-    }
-}
-
-function animateRoute(route) {
-    const steps = route.steps;
-    routeIndex = 0;
-
-    marker = new google.maps.Marker({
-        position: steps[routeIndex].start_location,
-        map: map,
-        icon: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-    });
-
-    moveMarker(steps);
-}
-
-function moveMarker(steps) {
-    if (routeIndex < steps.length) {
-        const nextStep = steps[routeIndex];
-        marker.setPosition(nextStep.start_location);
-        map.panTo(nextStep.start_location);
-        setTimeout(() => {
-            routeIndex++;
-            moveMarker(steps);
-        }, 1000); // Intervalo de atualização (ajuste para suavizar)
-    }
-}
-
-document.getElementById('startRouteBtn').addEventListener('click', startRoute);
-
 
 // Calcular rota evitando obstáculos
 function calculateRoute() {
@@ -191,6 +151,7 @@ function calculateRoute() {
         return;
     }
 
+    // Pega as coordenadas dos obstáculos e as transforma em waypoints que não são paradas.
     const waypoints = obstacleMarkers.map(marker => ({
         location: marker.getPosition(),
         stopover: false
@@ -209,6 +170,7 @@ function calculateRoute() {
     directionsService.route(request, (result, status) => {
         if (status === 'OK') {
             directionsRenderer.setDirections(result);
+            simulateNavigation(result);
         } else {
             console.error('Error fetching directions', result);
             alert('Erro ao calcular rota. Tente novamente.');
@@ -216,6 +178,33 @@ function calculateRoute() {
     });
 }
 
+// Simulação de navegação passo a passo
+function simulateNavigation(directionsResult) {
+    const route = directionsResult.routes[0].legs[0];
+    let stepIndex = 0;
 
+    function moveToNextStep() {
+        if (stepIndex < route.steps.length) {
+            const step = route.steps[stepIndex];
+            map.panTo(step.start_location);
+
+            new google.maps.Marker({
+                position: step.start_location,
+                map: map,
+                title: `Etapa ${stepIndex + 1}`,
+                icon: {
+                    url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                }
+            });
+
+            stepIndex++;
+            setTimeout(moveToNextStep, 2000); // Muda para o próximo passo após 2 segundos
+        } else {
+            alert('Rota concluída!');
+        }
+    }
+
+    moveToNextStep();
+}
 
 window.initMap = initMap;

@@ -8,13 +8,6 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
-// Configuração do banco de dados MySQL
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'carolcsb2019',
-    database: 'gpc'
-});
 
 db.connect(err => {
     if (err) {
@@ -25,33 +18,38 @@ db.connect(err => {
 });
 
 // Rota para adicionar usuário
-app.post('/api/usuarios', (req, res) => {
-    const { nome_completo, telefone } = req.body;
+app.post('/cadastro', (req, res) => {
+    const { nome, telefone } = req.body;
+
     const query = 'INSERT INTO usuario (nome_completo, telefone) VALUES (?, ?)';
-
-    db.query(query, [nome_completo, telefone], (err, results) => {
+    db.query(query, [nome, telefone], (err, result) => {
         if (err) {
-            console.error('Erro ao cadastrar usuário:', err);
-            return res.status(500).json({ message: 'Erro ao cadastrar usuário.' });
+            console.error('Erro ao inserir dados: ', err);
+            res.status(500).send('Erro ao cadastrar.');
         }
-        res.status(200).json({ message: 'Usuário cadastrado com sucesso!' });
+        else{
+            console.log('Dados inseridos com sucesso: ', result);
+            res.send('Cadastro realizado com sucesso!');
+        }
     });
-});
 
+});
 
 
 // Rota para adicionar um obstáculo
 app.post('/api/obstacles', (req, res) => {
     const { endereco } = req.body;
-
     if (!endereco) {
         return res.status(400).json({ message: 'Endereço é obrigatório.' });
     }
 
     const query = 'INSERT INTO obstaculos (endereco) VALUES (?)';
     db.query(query, [endereco], (err, result) => {
-        if (err) throw err;
-        res.json({ message: 'Obstáculo adicionado com sucesso.' });
+        if (err) {
+            console.error('Erro ao adicionar obstáculo:', err);
+            return res.status(500).json({ message: 'Erro ao adicionar obstáculo.' });
+        }
+        res.status(201).json({ message: 'Obstáculo adicionado com sucesso.' });
     });
 });
 
@@ -59,11 +57,13 @@ app.post('/api/obstacles', (req, res) => {
 app.get('/api/obstacles', (req, res) => {
     const query = 'SELECT * FROM obstaculos';
     db.query(query, (err, results) => {
-        if (err) throw err;
-        res.json(results);
+        if (err) {
+            console.error('Erro ao buscar obstáculos:', err);
+            return res.status(500).json({ message: 'Erro ao buscar obstáculos.' });
+        }
+        res.status(200).json(results);
     });
 });
-
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);

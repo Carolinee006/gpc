@@ -92,14 +92,15 @@
     <div id="loading-screen" class="d-flex flex-column justify-content-center align-items-center vh-100">
         <img id="logo" src="img/unnamed-removebg-preview.png" alt="Logo">
         <h1>GPC</h1>
-    <!--    <p>A melhor solução para rotas de caminhões</p> -->
-        <button id="enter-button" class="btn btn-light">Entrar</button>
+        <button id="goToCadastro">Entrar</button>
+
     </div>
 
     <script>
-        document.getElementById('enter-button').addEventListener('click', function() {
-            window.location.href = 'cadastro.html'; // Direciona para a página de cadastro
-        });
+            // Evento de clique para ir para a página de cadastro
+            document.getElementById('goToCadastro').addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
     </script>
 </body>
 </html>

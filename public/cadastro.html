@@ -12,28 +12,26 @@
 <body> 
     <div class="overlay"></div>
     <div class="content">
-    <div class='container'>
-        <div class='card'>
-            <h1>Criar Conta</h1>
-            <div id='msgError' style="color: red;"></div>
-            <div id='msgSuccess' style="color: green;"></div>
-            <form id="signupForm">
-                <form action="/cadastro" method="POST">
-                <div class="label-float">
-                    <input type="text" id="nome" placeholder=" " required>
-                    <label id="labelNome" for="nome" style="font-weight: bold;">Nome Completo</label>
-                </div>
-                <div class="label-float">
-                    <input type="text" id="telefone" placeholder=" " required>
-                    <label id="labelTelefone" for="telefone" style="font-weight: bold;">Número de telefone</label>
-                </div>
-                <div class='justify-center'>
-                    <button type="submit" style="font-weight: bold;">Cadastrar</button>
-                </div>
+        <div class='container'>
+            <div class='card'>
+                <h1>Criar Conta</h1>
+                <div id='msgError' style="color: red;"></div>
+                <div id='msgSuccess' style="color: green;"></div>
+                <form id="signupForm">
+                    <div class="label-float">
+                        <input type="text" id="nome" placeholder=" " required>
+                        <label id="labelNome" for="nome" style="font-weight: bold;">Nome Completo</label>
+                    </div>
+                    <div class="label-float">
+                        <input type="text" id="telefone" placeholder=" " required>
+                        <label id="labelTelefone" for="telefone" style="font-weight: bold;">Número de telefone</label>
+                    </div>
+                    <div class='justify-center'>
+                        <button type="submit" style="font-weight: bold;">Cadastrar</button>
+                    </div>
                 </form>
-            </form>
+            </div>
         </div>
-    </div>
     </div>
     <script src="cadas.js"></script>
 </body>

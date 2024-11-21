@@ -170,41 +170,11 @@ function calculateRoute() {
     directionsService.route(request, (result, status) => {
         if (status === 'OK') {
             directionsRenderer.setDirections(result);
-            simulateNavigation(result);
         } else {
             console.error('Error fetching directions', result);
             alert('Erro ao calcular rota. Tente novamente.');
         }
     });
-}
-
-// Simulação de navegação passo a passo
-function simulateNavigation(directionsResult) {
-    const route = directionsResult.routes[0].legs[0];
-    let stepIndex = 0;
-
-    function moveToNextStep() {
-        if (stepIndex < route.steps.length) {
-            const step = route.steps[stepIndex];
-            map.panTo(step.start_location);
-
-            new google.maps.Marker({
-                position: step.start_location,
-                map: map,
-                title: `Etapa ${stepIndex + 1}`,
-                icon: {
-                    url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-                }
-            });
-
-            stepIndex++;
-            setTimeout(moveToNextStep, 2000); // Muda para o próximo passo após 2 segundos
-        } else {
-            alert('Rota concluída!');
-        }
-    }
-
-    moveToNextStep();
 }
 
 window.initMap = initMap;
